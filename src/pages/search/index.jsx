@@ -21,14 +21,8 @@ const Search = () => {
         ) : error ? (
           <p>Error: {error}</p>
         ) : (
-          // Map through searchResults and render components for each result
           searchResults.map((result) => (
             <MovieCard key={result.id} movie={result} />
-            // <div key={result.id} className="border p4">
-            //   {result.name ? <h3>{result.name}</h3> : <h3>{result.title}</h3>}
-
-            //   {console.log(result)}
-            // </div>
           ))
         )}
       </div>

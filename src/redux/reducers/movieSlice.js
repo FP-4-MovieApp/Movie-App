@@ -77,7 +77,6 @@ const movieSlice = createSlice({
         state.isLoading = false;
         state.details = action?.payload;
         state.error = null;
-        console.log(state.details);
       })
       .addCase(fetchDetails.rejected, (state, action) => {
         state.isLoading = false;

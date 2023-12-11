@@ -9,7 +9,6 @@ const Detail = () => {
   const { details, isLoading, error } = useSelector((state) => state.movies);
   const { id } = useParams();
 
-  // Fetch details on component mount
   useEffect(() => {
     dispatch(fetchDetails(id));
   }, []);
@@ -34,80 +33,60 @@ const Detail = () => {
     );
   }
 
-  // Extract relevant data from details object
-  const { title, release_date, overview, poster_path, trailer_url } = details;
+  const { title, release_date, overview, poster_path, genres } = details;
 
   return (
-    <div className="flex flex-col items-center p-8">
-      {/* Trailer section */}
-      {trailer_url && (
-        <div className="w-full mb-8 aspect-video rounded-md overflow-hidden">
-          <iframe
-            className="w-full h-full"
-            src={trailer_url}
-            title={title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      )}
-
+    <div className="flex flex-col lg:flex-row items-center p-8">
       <img
-        className="w-64 rounded-md"
+        className="w-64 h-auto rounded-md lg:mr-8"
         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt={title}
       />
 
-      <h2 className="text-3xl font-bold mt-8">{title}</h2>
+      <div className="lg:w-2/3">
+        <h2 className="text-3xl font-bold">{title}</h2>
 
-      <p className="text-lg font-medium text-gray-500 mt-2">
-        Release Date: {release_date}
-      </p>
+        <p className="text-lg font-medium text-gray-500 mt-2">
+          Release Date: {release_date}
+        </p>
 
-      <h3 className="text-2xl font-medium mt-8">Overview</h3>
-      <p className="text-lg leading-relaxed">{overview}</p>
-
-      {/* Add additional information and functionalities as needed */}
-      <div className="flex justify-center mt-8">
-        <button className="bg-gray-800 text-white px-4 py-2 rounded-md shadow hover:bg-gray-700">
-          Add to Watchlist
-        </button>
-        <button className="ml-4 bg-gray-200 text-gray-800 px-4 py-2 rounded-md shadow hover:bg-gray-300">
-          Read Reviews
-        </button>
-      </div>
-
-      {/* Render related movies if available */}
-      {details.related_movies && (
-        <div className="mt-12">
-          <h3 className="text-2xl font-medium">Related Movies</h3>
-          <ul className="list-none">
-            {details.related_movies.map((movie) => (
-              <li key={movie.id}>
-                <a
-                  href={`/movies/${movie.id}`}
-                  className="text-lg font-medium hover:underline"
-                >
-                  {movie.title}
-                </a>
-              </li>
+        <div className="flex items-center text-lg font-medium text-gray-500 mt-2">
+          <span>Genre:</span>
+          <ul className="ml-2 flex flex-row gap-2">
+            {genres.map((genre) => (
+              <li key={genre.id}>{genre.name}</li>
             ))}
           </ul>
         </div>
-      )}
+
+        <h3 className="text-2xl font-medium mt-4">Overview</h3>
+        <p className="text-lg leading-relaxed">{overview}</p>
+
+        <div className="flex justify-center mt-8">
+          <button className="bg-gray-800 text-white px-4 py-2 rounded-md shadow hover:bg-gray-700">
+            Add to Watchlist
+          </button>
+          <button className="ml-4 bg-gray-200 text-gray-800 px-4 py-2 rounded-md shadow hover:bg-gray-300">
+            Read Reviews
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
 Detail.propTypes = {
   movie: PropTypes.shape({
-    id: PropTypes.number,
     title: PropTypes.string,
     release_date: PropTypes.string,
     overview: PropTypes.string,
     poster_path: PropTypes.string,
-    trailer_url: PropTypes.string,
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+      })
+    ),
   }),
 };
 

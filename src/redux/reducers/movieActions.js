@@ -28,7 +28,7 @@ export const fetchTrending = createAsyncThunk(
   "movies/fetchTrending",
   async (timeWindow = "day") => {
     try {
-      const response = await api.get(`/trending/all/${timeWindow}`, options);
+      const response = await api.get(`/trending/movie/${timeWindow}`, options);
       return response.data;
     } catch (err) {
       throw err.message;
@@ -41,7 +41,7 @@ export const searchMovie = createAsyncThunk(
   async (searchQuery) => {
     try {
       const response = await api.get(
-        `/search/multi?query=${searchQuery}`,
+        `/search/movie?query=${searchQuery}`,
         options
       );
 
@@ -57,7 +57,6 @@ export const fetchDetails = createAsyncThunk(
   async (movieId) => {
     try {
       const response = await api.get(`/movie/${movieId}`, options);
-      console.log(response.data);
       return response.data;
     } catch (err) {
       throw err.message;

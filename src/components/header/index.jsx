@@ -4,8 +4,6 @@ import Logo from "../../assets/logo.png";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  // const [isDropdownShow, setIsDropdownShow] = useState(false);
-
   const navigate = useNavigate();
   const handleSearch = () => {
     if (searchQuery) {
@@ -31,7 +29,7 @@ const Header = () => {
       </Link>
       <div className="text-xl cursor-pointer flex ">
         <input
-          className="rounded-full h-16 border-slate-600"
+          className="rounded-full h-16 border-slate-600 pl-2"
           type="text"
           placeholder="Type to search a movie..."
           value={searchQuery}

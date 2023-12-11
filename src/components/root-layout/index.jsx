@@ -6,7 +6,6 @@ const RootLayout = ({ children }) => {
     <div className="flex flex-col justify-between min-h-screen bg-[#EBEAEA] px-40">
       <Header />
       <main>{children}</main>
-      {console.log("ini di root")}
       <Footer />
     </div>
   );
